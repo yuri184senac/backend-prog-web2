@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { Usuario } from 'src/models/usuario.interface';
 
@@ -36,5 +36,12 @@ export class UsuariosController {
         }
     }
     //Excluir usuario
-    
+    @Delete('/:id')
+    public deleteUserById(@Param() params: any) {
+        try {
+            return this.usuarioService.deleteUserById(params.id);
+        } catch (err) {
+            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
+        }
+    }
 }
