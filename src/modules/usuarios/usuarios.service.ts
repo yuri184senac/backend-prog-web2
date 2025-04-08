@@ -6,6 +6,11 @@ import { Usuario } from 'src/models/usuario.interface';
 export class UsuariosService {
     constructor(private firestoreService: FirestoreService) { }
 
+    getUserAll() {
+        const path = 'usuarios';
+        return this.firestoreService.getCollection(path);
+    }
+
     getUserById(id: string) {
         const path = `usuarios/${id}`;
         return this.firestoreService.getDocument(path);

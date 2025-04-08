@@ -1,11 +1,22 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { Usuario } from 'src/models/usuario.interface';
+import { Professor } from 'src/models/professor.interface';
 
 @Controller('usuarios')
 export class UsuariosController {
 
     constructor(private usuarioService: UsuariosService) { }
+
+    @Get('')
+    public getProfessorAll() {
+        try {
+            return this.usuarioService.getUserAll();
+        } catch (err) {
+            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
+        }
+    }
+
     //Pegar usuario
     @Get('/:id')
     public getUserById(@Param() params: any) {
@@ -18,7 +29,7 @@ export class UsuariosController {
 
     //Criar usuario
     @Post('')
-    public createUser(@Body() body: Usuario) {
+    public createUser(@Body() body: Professor) {
         try {
             return this.usuarioService.createUser(body);
         } catch (err) {
@@ -28,7 +39,7 @@ export class UsuariosController {
 
     //Editar usuario
     @Put('/:id')
-    public updateUserById(@Param() params: any, @Body() body: Usuario) {
+    public updateUserById(@Param() params: any, @Body() body: Professor) {
         try {
             return this.usuarioService.updateUserById(params.id, body);
         } catch (err) {
