@@ -8,43 +8,31 @@ export class AlunoController {
 
     @Get('')
     public getAlunoAll() {
-        try {
-            return this.alunoService.getAlunoAll();
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.alunoService.getAlunoAll());
     }
 
     @Get('/:id')
     public getAlunoById(@Param() params: any) {
-        try {
-            return this.alunoService.getAlunoById(params.id);
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.alunoService.getAlunoById(params.id));
     }
 
     @Post('')
     public createAluno(@Body() body: Aluno) {
-        try {
-            return this.alunoService.createAluno(body);
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.alunoService.createAluno(body));
     }
 
     @Put('/:id')
     public updateAlunoById(@Param() params: any, @Body() body: Aluno) {
-        try {
-            return this.alunoService.updateAlunoById(params.id, body);
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.alunoService.updateAlunoById(params.id, body));
     }
     @Delete('/:id')
     public deleteAlunoById(@Param() params: any) {
+        this.handleRequest(this.alunoService.deleteAlunoById(params.id));
+    }
+
+    private async handleRequest(promise: Promise<any>) {
         try {
-            return this.alunoService.deleteAlunoById(params.id);
+            return await promise;
         } catch (err) {
             throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
         }

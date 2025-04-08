@@ -10,44 +10,32 @@ export class ProfessoresController {
 
     @Get('')
     public getProfessorAll() {
-        try {
-            return this.professorService.getProfessorAll();
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.professorService.getProfessorAll());
     }
 
     @Get('/:id')
     public getProfessorById(@Param() params: any) {
-        try {
-            return this.professorService.getProfessorById(params.id);
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.professorService.getProfessorById(params.id));
     }
 
     @Post('')
     public createProfessor(@Body() body: Professor) {
-        try {
-            return this.professorService.createProfessor(body);
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.professorService.createProfessor(body));
     }
 
     @Put('/:id')
     public updateProfessorById(@Param() params: any, @Body() body: Professor) {
-        try {
-            return this.professorService.updateProfessorById(params.id, body);
-        } catch (err) {
-            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
-        }
+        this.handleRequest(this.professorService.updateProfessorById(params.id, body));
     }
 
     @Delete('/:id')
     public deleteProfessorById(@Param() params: any) {
+        this.handleRequest(this.professorService.deleteProfessorById(params.id));
+    }
+
+    private async handleRequest(promise: Promise<any>) {
         try {
-            return this.professorService.deleteProfessorById(params.id);
+            return await promise;
         } catch (err) {
             throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR, err);
         }
